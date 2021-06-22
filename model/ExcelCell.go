@@ -1,9 +1,9 @@
 package model
 
-type ExcelCell struct{
-	row string
+type ExcelCell struct {
+	row    string
 	column string
-	value string
+	value  string
 }
 
 func (cell *ExcelCell) SetRow(row string) {
@@ -31,5 +31,5 @@ func (cell *ExcelCell) GetCellValue() string {
 }
 
 func (cell *ExcelCell) GetAxis() string {
-	return cell.row + cell.column
+	return cell.column + cell.row
 }

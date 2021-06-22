@@ -3,28 +3,41 @@ package main
 import (
 	logic "excel/logic"
 	"excel/model"
+	"strconv"
 )
 
 func main() {
-	createExcelFile("C:\\GoRepo\\Labs\\3\\Excel",
-		"Prueba9.xlsx")
+
+	rows := 5
+	columns := 5
+	array := make([][]string, rows)
+	for i := range array {
+		array[i] = make([]string, columns)
+		for iColumn, _ := range array[i] {
+			array[i][iColumn] = "sii"
+		}
+	}
+	createExcelFile("C:\\GoRepo\\Labs\\3\\goexcel", "PruebaOtro.xlsx", array)
 }
 
-func createExcelFile(path string, name string) {
+func createExcelFile(path string, name string, array [][]string) {
 	excel := new(logic.Excel)
 	excelFile := new(model.ExcelFile)
 	excelFile.SetFilePath(path)
 	excelFile.SetFileName(name)
-	addSheetToFile(excelFile)
+	addSheetToFile(excelFile, array)
 	excel.WriteExcelFile(excelFile)
 }
 
-func addSheetToFile(excelFile *model.ExcelFile) {
+func addSheetToFile(excelFile *model.ExcelFile, array [][]string) {
 	excelSheet := new(model.ExcelSheet)
 	excelSheet.SetSheetName("Sheet1")
 
-	addCellToSheet(excelSheet, "A", "1", "Hablame")
-	addCellToSheet(excelSheet, "B", "1", "xyz")
+	for iRow, columns := range array {
+		for iColumn, column := range columns {
+			addCellToSheet(excelSheet, strconv.Itoa(iRow+1), string(iColumn+65), column)
+		}
+	}
 
 	excelFile.AddExcelSheet(excelSheet)
 }
